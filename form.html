@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Pacifico&family=Tektur&display=swap"
+    rel="stylesheet">
+<link rel="stylesheet" href="../javascriptcalctask/css/calc.css">
+
+<body>
+    <div class="form-control form-control-bg dark text-center shadow-sm" id="form1">
+        <p><label class="labels ms-5 mt-5">ENTER THE firstname:</label></p>
+        <p><input class="numbers ms-5" type="text" id="fname" value="" onkeypress="alphaonly(event)"></p>
+        <p><label class="labels ms-5">ENTER THE lastname:</label></p>
+        <p><input class="numbers ms-5" type="text" id="lname" value="" onkeypress="alphaonly(event)"></p>
+        <p><label class="labels ms-5">ENTER email id:</label></p>
+        <p><input class="numbers ms-5" type="text" id="email" value="" onchange="validateemail(event)"></p>
+        <p><label class="labels ms-5">ENTER mobileno:</label></p>
+        <p><input class="numbers ms-5" type="text" id="mobno" value="" onchange="validphoneno(event)"></p>
+        <p><label class="labels ms-5">ENTER date of birth:</label></p>
+        <p><input class="numbers ms-5" type="date" id="dob" value="" onchange="validateDOB(event)"></p>
+        <button class="btn btn-primary ms-5 mt-3" onclick="submitform(event)">Submit</button>
+
+    </div>
+
+        <script>
+            function alphaonly(event) {
+                const keyCode = event.which || event.keyCode;
+                if (keyCode < 59 || keyCode > 90 && keyCode == 8) {
+                    alert("Please enter a Alpha names");
+                }
+
+            }
+
+            function validateemail(event) {
+                var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+                if (email.value.match(validRegex)) {
+                    alert("Valid email address verified success");
+                    // document.form1.email.focus();
+                    return true;
+
+                } else {
+                    alert("Invalid email address! enter correct format");
+                    // document.form1.email.focus();
+                    return false;
+                }
+
+            }
+
+            function validphoneno(event) {
+                var mobvalidregex = /^[0-9]{10}$/;
+
+                if (mobno.value.match(mobvalidregex)) {
+                    alert("valid mobile no verified succees");
+                    // document.form1.mobno.focus();
+                    return true;
+                }
+                else {
+                    alert("Invalid number enter 10 digit numbers");
+                    // document.form1.mobno.focus();
+                    return false;
+                }
+
+            }
+
+            function validateDOB(event) {
+                const dobInput = document.getElementById('dob').value;
+                const dob = new Date(dobInput);
+                const currentDate = new Date();
+
+                // Calculate the age difference in milliseconds
+                const ageDiffInMilliseconds = currentDate - dob;
+
+                // Convert milliseconds to years (approximate value)
+                const years = ageDiffInMilliseconds / (365.25 * 24 * 60 * 60 * 1000);
+
+                if (years >= 18) {
+                    alert("Valid date of birth!");
+                    return true;
+                } else {
+                    alert("You must be at least 18 years old.");
+                    document.getElementById('dob').value = '';
+                    // document.getElementById('dob').focus();
+                    return false;
+                }
+            }
+
+            function submitform(event) {
+    const firstName = document.getElementById('fname').value;
+    const lastName = document.getElementById('lname').value;
+    const email = document.getElementById('email').value;
+    const mobileNo = document.getElementById('mobno').value;
+    const dob = document.getElementById('dob').value;
+
+    // Validate the data before creating the object
+    if (!firstName || !lastName || !email || !mobileNo || !dob) {
+      alert('Please fill in all the fields before submitting.');
+      return;
+    }
+
+    // Validate the date of birth
+    const dobInput = new Date(dob);
+    const currentDate = new Date();
+    const ageDiffInMilliseconds = currentDate - dobInput;
+    const years = ageDiffInMilliseconds / (365.25 * 24 * 60 * 60 * 1000);
+    if (years < 18) {
+      alert('You must be at least 18 years old to submit the form.');
+      return;
+    }
+
+    
+    const userData = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      mobileNo: mobileNo,
+      dob: dob
+    };
+
+    // Display the object in the console
+    console.log(userData);
+
+    document.getElementById('fname').value = '';
+            document.getElementById('lname').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('mobno').value = '';
+            document.getElementById('dob').value = '';
+
+            function printUserData() {
+            for (const user of usersData) {
+                console.log(user);
+                // You can also display the user data on the webpage as needed.
+            }
+        }
+  }
+        </script>
+
+    
+</body>
+
+</html>
